@@ -2,3 +2,4 @@
 examples
 .vscode
 textgridtofolia/__pycache__
+test/__pycache__

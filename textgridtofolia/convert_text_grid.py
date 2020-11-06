@@ -14,6 +14,7 @@ def convert_text_grid_to_folia(text_grid_file, speakers, doc):
 
     text_grid = tgio.openTextgrid(text_grid_file)
     turns = find_turns(text_grid, speakers)
+    print(turns)
     speech = doc.add(folia.Speech)
     for turn in turns:
         turn_event = speech.add(folia.Event)

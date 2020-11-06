@@ -43,8 +43,9 @@ def _openTextgrid(fnFullPath, readRaw=False, readAsJson=False):
     return textgrid
 
 def begin_end_time(ts):
-    hours, ts = divmod(ts, 3600)
-    minutes, ts = divmod(ts, 60)
-    seconds, ts = divmod(ts, 1)
+    round_3 = lambda x: round(x, 3)
+    hours, ts = map(round_3, divmod(ts, 3600))
+    minutes, ts = map(round_3, divmod(ts, 60))
+    seconds, ts = map(round_3, divmod(ts, 1))
     miliseconds = ts * 1000
-    return hours, minutes, seconds, miliseconds
+    return int(hours), int(minutes), int(seconds), int(miliseconds)
