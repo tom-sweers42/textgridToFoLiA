@@ -27,13 +27,14 @@ def convert_text_grid_to_folia(text_grid_file, speaker_1, speaker_2, doc):
             utterance.begintime = begin_end_time(ut.start)
             utterance.endtime = begin_end_time(ut.end)
 
-            #TODO Replace split with Tokenizer!
+            # TODO Replace split with Tokenizer!
             for word in ut.label.split(" "):
                 if word != "":
                     utterance.add(folia.Word, word)
                 else:
                     print(word)
     return doc
+
 
 def find_turns(speaker_1_tier, speaker_2_tier):
     turns = []
@@ -63,32 +64,3 @@ def begin_end_time(ts):
     seconds, ts = divmod(ts, 1)
     miliseconds = ts * 1000
     return hours, minutes, seconds, miliseconds
-
-
-#     utterances = []
-#     neg_utterances = []
-#     paths = []
-#     contexts = []
-#     for subdir, dirs, files in os.walk(DIRECTORY):
-#         for file in files:
-#             if file.endswith(".hmi"):
-#                 if str(file).split('.')[0] in senior_id_list:
-#                     hmi_file_path = os.path.join(subdir,file)
-#                     paths.append(hmi_file_path)
-#                     tg = tgio.openTextgrid(hmi_file_path)
-#                     tg_nxxxx = tg.tierDict[tg.tierNameList[1]]
-#                     text = doc.add(folia.Speech)
-#                     text.speaker = "sdfs"
-#                     for ut in tg_nxxxx.entryList:
-#                         context = find_context(ut, tg.tierDict["TTS"] ,tg_nxxxx)
-#                         div = text.add(folia.Division)
-#                         for c in context[1]:
-#                             div.set = "turn"
-#                             utterance = div.add(folia.Utterance)
-#                             utterance.begintime = begin_end_time(ut.start)
-#                             utterance.endtime = begin_end_time(ut.end)
-#                             for word in c.label.split(" "):
-#                                 if word != "":
-#                                     utterance.add(folia.Word, word)
-#                                 else:
-#                                     print(word)
