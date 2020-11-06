@@ -1,3 +1,4 @@
+from os import truncate
 from folia import main as folia
 from praatio import tgio
 
@@ -14,17 +15,19 @@ def convert_text_grid_to_folia(text_grid_file, speaker_1, speaker_2, doc):
 
     turns = find_turns(speaker_1_tier, speaker_2_tier)
     speech = doc.add(folia.Speech)
-    for turn in turns:
+    for (turn, speaker_id) in turns:
         turn_event = speech.add(folia.Event)
         turn_event.set = "turn"
+        if speaker_id == 1:
+            turn_event.speaker = speaker_1
+        elif speaker_id == 2:
+            turn_event.speaker = speaker_2
         for i, ut in enumerate(turn):
-            if i == 0:
-                i_div = q_div
-            else:
-                i_div = a_div
-            utterance = i_div.add(folia.Utterance)
+            utterance = turn_event.add(folia.Utterance)
             utterance.begintime = begin_end_time(ut.start)
             utterance.endtime = begin_end_time(ut.end)
+
+            #TODO Replace split with Tokenizer!
             for word in ut.label.split(" "):
                 if word != "":
                     utterance.add(folia.Word, word)
@@ -32,25 +35,24 @@ def convert_text_grid_to_folia(text_grid_file, speaker_1, speaker_2, doc):
                     print(word)
     return doc
 
-def find_turns(q_tier, a_tier):
+def find_turns(speaker_1_tier, speaker_2_tier):
     turns = []
     f_index = 0
     l_index = 0
-    for j, question in enumerate(q_tier.entryList):
-        #         print(f'{f_index} -- {l_index}')
-        for i, answer in enumerate(a_tier.entryList[f_index:]):
+    for j, question in enumerate(speaker_1_tier.entryList):
+        for i, answer in enumerate(speaker_2_tier.entryList[f_index:]):
             if (
-                j + 1 < len(q_tier.entryList)
-                and answer.start >= q_tier.entryList[j + 1].start
+                j + 1 < len(speaker_1_tier.entryList)
+                and answer.start >= speaker_1_tier.entryList[j + 1].start
             ):
-                #                 print(f'q: {j}, a: {f_index + i}')
                 l_index = f_index + i
                 break
-            elif j + 1 == len(q_tier.entryList):
+            elif j + 1 == len(speaker_1_tier.entryList):
                 l_index = f_index + i
                 break
 
-        turns.append([question] + a_tier.entryList[f_index:l_index])
+        turns.append(([question], 1))
+        turns.append((speaker_2_tier.entryList[f_index:l_index], 2))
         f_index = l_index
     return turns
 
