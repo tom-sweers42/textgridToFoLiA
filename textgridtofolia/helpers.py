@@ -41,3 +41,10 @@ def _openTextgrid(fnFullPath, readRaw=False, readAsJson=False):
             textgrid.replaceTier(tierName, tier)
 
     return textgrid
+
+def begin_end_time(ts):
+    hours, ts = divmod(ts, 3600)
+    minutes, ts = divmod(ts, 60)
+    seconds, ts = divmod(ts, 1)
+    miliseconds = ts * 1000
+    return hours, minutes, seconds, miliseconds

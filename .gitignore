@@ -1,4 +1,4 @@
 .python-version
 examples
 .vscode
-src/__pycache__
+textgridtofolia/__pycache__

@@ -1,6 +1,8 @@
 from itertools import groupby
 from os import truncate
 
+from textgridtofolia.helpers import begin_end_time
+
 from folia import main as folia
 from praatio import tgio
 
@@ -49,9 +51,3 @@ def find_turns(text_grid, speakers):
     ]
 
 
-def begin_end_time(ts):
-    hours, ts = divmod(ts, 3600)
-    minutes, ts = divmod(ts, 60)
-    seconds, ts = divmod(ts, 1)
-    miliseconds = ts * 1000
-    return hours, minutes, seconds, miliseconds
