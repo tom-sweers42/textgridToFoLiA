@@ -4,16 +4,23 @@ from os import truncate
 from .helpers import begin_end_time
 from folia import main as folia
 from praatio import tgio
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 TEST_FILE = "../examples/uni_fn000029.hmi"
 TEST_DOC = folia.Document(id="test")
 
+def convert_text_grids_to_folia(text_grid_files: List[str], speakers_dict: Dict[str, List[str]], event_tiers_dict: Dict[str, List[str]], name: str) -> folia.Document:
+    doc = folia.Document(id=name)
+    for text_grid_file in text_grid_files:
+        speakers = speakers_dict.get(text_grid_file, [])
+        event_tiers = event_tiers_dict.get(text_grid_file, [])
+        convert_text_grid_to_folia(text_grid_file, speakers, event_tiers, name, doc=doc)
+    return doc
 
-
-def convert_text_grid_to_folia(text_grid_file: str, speakers: List[str], events_tiers: List[str], name: str) -> folia.Document:
+def convert_text_grid_to_folia(text_grid_file: str, speakers: List[str], events_tiers: List[str], name: str, doc: folia.Document = None) -> folia.Document:
 
     text_grid = tgio.openTextgrid(text_grid_file)
-    doc = folia.Document(id=name)
+    if not doc:
+        doc = folia.Document(id=name)
     add_text_grid_speakers_to_folia(text_grid, speakers, doc)
     add_text_grid_events_to_folia(text_grid, events_tiers, doc)
 
@@ -56,6 +63,8 @@ def add_text_grid_speakers_to_folia(text_grid: tgio.Textgrid, speakers: List[str
 
 
 def add_text_grid_events_to_folia(text_grid: tgio.Textgrid, event_tiers: List[str], doc: folia.Document) -> None:
+    if not event_tiers:
+        return
     speech = doc.add(folia.Speech)
     for event_tier_name in event_tiers:
         for tg_event in text_grid.tierDict[event_tier_name].entryList:

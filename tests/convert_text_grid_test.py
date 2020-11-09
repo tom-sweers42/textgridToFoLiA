@@ -3,7 +3,7 @@ import unittest
 from folia.main import Utterance
 from praatio.tgio import openTextgrid
 
-from textgridtofolia.convert_text_grid import add_text_grid_speakers_to_folia
+from textgridtofolia.convert_text_grid import add_text_grid_speakers_to_folia, add_text_grid_events_to_folia, convert_text_grid_to_folia
 
 from praatio import tgio
 
@@ -39,16 +39,24 @@ class TestConvertTextGridMethods(unittest.TestCase):
 
         tg.addTier(speaker_1_tier)
         tg.addTier(speaker_2_tier)
+
+        event_list = [
+            (1.0, "EVENT 1"),
+            (1.2, "EVENT 2")
+        ]
+
+        event_tier = tgio.PointTier("EVENTS", event_list)
+        tg.addTier(event_tier)
         self.filename = os.path.join(self.test_dir, "test.TextGrid")
         tg.save(self.filename)
 
-    def test_convert_text_grid_to_folia(self):
+    def test_add_text_grid_to_folia(self):
 
         assert_doc = folia.Document(id="test")
 
         assert_speech = assert_doc.add(folia.Speech)
         assert_event = assert_speech.add(folia.Event)
-        assert_event.set = "turn"
+        assert_event.cls = "turn"
         assert_event.speaker = "speaker_1"
 
         utterance = assert_event.add(folia.Utterance)
@@ -71,7 +79,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
 
 
         assert_event = assert_speech.add(folia.Event)
-        assert_event.set = "turn"
+        assert_event.cls = "turn"
         assert_event.speaker = "speaker_2"
 
         utterance = assert_event.add(folia.Utterance)
@@ -93,7 +101,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.add(folia.Word, "b.")
 
         assert_event = assert_speech.add(folia.Event)
-        assert_event.set = "turn"
+        assert_event.cls = "turn"
         assert_event.speaker = "speaker_1"
 
         utterance = assert_event.add(folia.Utterance)
@@ -106,7 +114,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.add(folia.Word, "3.")
 
         assert_event = assert_speech.add(folia.Event)
-        assert_event.set = "turn"
+        assert_event.cls = "turn"
         assert_event.speaker = "speaker_2"
 
         utterance = assert_event.add(folia.Utterance)
@@ -134,4 +142,185 @@ class TestConvertTextGridMethods(unittest.TestCase):
         self.assertEqual(doc.xmlstring(), assert_doc.xmlstring())
 
 
+    def test_add_text_grid_to_folia_one_speaker(self):
 
+        assert_doc = folia.Document(id="test")
+
+        assert_speech = assert_doc.add(folia.Speech)
+        assert_event = assert_speech.add(folia.Event)
+        assert_event.cls = "turn"
+        assert_event.speaker = "speaker_1"
+
+        utterance = assert_event.add(folia.Utterance)
+        utterance.begintime = (0,0,0,0)
+        utterance.endtime = (0,0,1,0)
+
+        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "is")
+        utterance.add(folia.Word, "utterance")
+        utterance.add(folia.Word, "1.")
+
+        utterance = assert_event.add(folia.Utterance)
+        utterance.begintime = (0,0,1,100)
+        utterance.endtime = (0,0,2,100)
+
+        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "is")
+        utterance.add(folia.Word, "utterance")
+        utterance.add(folia.Word, "2.")
+
+        utterance = assert_event.add(folia.Utterance)
+        utterance.begintime = (0,0,4,0)
+        utterance.endtime = (0,0,5,0)
+
+        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "is")
+        utterance.add(folia.Word, "utterance")
+        utterance.add(folia.Word, "3.")
+
+        self.create_text_grid()
+
+        speakers = ["speaker_1"]
+        doc = folia.Document(id="test")
+
+        tg = tgio.openTextgrid(self.filename)
+        add_text_grid_speakers_to_folia(tg, speakers, doc)
+
+        print(doc.xmlstring())
+        print(assert_doc.xmlstring())
+
+
+        self.assertEqual(doc, assert_doc)
+        self.assertEqual(doc.xmlstring(), assert_doc.xmlstring())
+
+
+
+    def test_add_text_grid_events_to_folia(self):
+
+        assert_doc = folia.Document(id="test")
+        assert_speech = assert_doc.add(folia.Speech)
+
+        assert_event = assert_speech.add(folia.Event, "EVENT 1")
+        assert_event.cls = "tg-event-EVENTS"
+        assert_event.begintime = (0,0,1,0)
+
+        assert_event = assert_speech.add(folia.Event, "EVENT 2")
+        assert_event.cls = "tg-event-EVENTS"
+        assert_event.begintime = (0,0,1,200)
+
+
+        self.create_text_grid()
+
+        event_tiers = ["EVENTS"]
+        doc = folia.Document(id="test")
+
+        tg = tgio.openTextgrid(self.filename)
+        add_text_grid_events_to_folia(tg, event_tiers, doc)
+
+        print(doc.xmlstring())
+        print(assert_doc.xmlstring())
+
+
+        self.assertEqual(doc, assert_doc)
+        self.assertEqual(doc.xmlstring(), assert_doc.xmlstring())
+
+    def test_convert_text_grdid_to_folia(self):
+
+        assert_doc = folia.Document(id="test")
+
+        assert_speech = assert_doc.add(folia.Speech)
+        assert_event = assert_speech.add(folia.Event)
+        assert_event.cls = "turn"
+        assert_event.speaker = "speaker_1"
+
+        utterance = assert_event.add(folia.Utterance)
+        utterance.begintime = (0,0,0,0)
+        utterance.endtime = (0,0,1,0)
+
+        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "is")
+        utterance.add(folia.Word, "utterance")
+        utterance.add(folia.Word, "1.")
+
+        utterance = assert_event.add(folia.Utterance)
+        utterance.begintime = (0,0,1,100)
+        utterance.endtime = (0,0,2,100)
+
+        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "is")
+        utterance.add(folia.Word, "utterance")
+        utterance.add(folia.Word, "2.")
+
+
+        assert_event = assert_speech.add(folia.Event)
+        assert_event.cls = "turn"
+        assert_event.speaker = "speaker_2"
+
+        utterance = assert_event.add(folia.Utterance)
+        utterance.begintime = (0,0,2,200)
+        utterance.endtime = (0,0,3,200)
+
+        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "is")
+        utterance.add(folia.Word, "utterance")
+        utterance.add(folia.Word, "a.")
+
+        utterance = assert_event.add(folia.Utterance)
+        utterance.begintime = (0,0,3,300)
+        utterance.endtime = (0,0,3,900)
+
+        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "is")
+        utterance.add(folia.Word, "utterance")
+        utterance.add(folia.Word, "b.")
+
+        assert_event = assert_speech.add(folia.Event)
+        assert_event.cls = "turn"
+        assert_event.speaker = "speaker_1"
+
+        utterance = assert_event.add(folia.Utterance)
+        utterance.begintime = (0,0,4,0)
+        utterance.endtime = (0,0,5,0)
+
+        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "is")
+        utterance.add(folia.Word, "utterance")
+        utterance.add(folia.Word, "3.")
+
+        assert_event = assert_speech.add(folia.Event)
+        assert_event.cls = "turn"
+        assert_event.speaker = "speaker_2"
+
+        utterance = assert_event.add(folia.Utterance)
+        utterance.begintime = (0,0,5,100)
+        utterance.endtime = (0,0,7,0)
+
+        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "is")
+        utterance.add(folia.Word, "utterance")
+        utterance.add(folia.Word, "c.")
+
+
+        assert_speech = assert_doc.add(folia.Speech)
+
+        assert_event = assert_speech.add(folia.Event, "EVENT 1")
+        assert_event.cls = "tg-event-EVENTS"
+        assert_event.begintime = (0,0,1,0)
+
+        assert_event = assert_speech.add(folia.Event, "EVENT 2")
+        assert_event.cls = "tg-event-EVENTS"
+        assert_event.begintime = (0,0,1,200)
+
+        self.create_text_grid()
+
+        speakers = ["speaker_1", "speaker_2"]
+        event_tiers = ["EVENTS"]
+
+        doc = convert_text_grid_to_folia(self.filename, speakers, event_tiers, "test")
+
+        print(doc.xmlstring())
+        print(assert_doc.xmlstring())
+
+
+        self.assertEqual(doc, assert_doc)
+        self.assertEqual(doc.xmlstring(), assert_doc.xmlstring())
