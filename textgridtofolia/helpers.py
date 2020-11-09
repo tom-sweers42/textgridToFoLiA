@@ -1,5 +1,6 @@
 import io
 import json
+from typing import Tuple
 
 from praatio.tgio import (
     _dictionaryToTg,
@@ -42,7 +43,8 @@ def _openTextgrid(fnFullPath, readRaw=False, readAsJson=False):
 
     return textgrid
 
-def begin_end_time(ts):
+
+def begin_end_time(ts: float) -> Tuple[int, int, int, int]:
     round_3 = lambda x: round(x, 3)
     hours, ts = map(round_3, divmod(ts, 3600))
     minutes, ts = map(round_3, divmod(ts, 60))

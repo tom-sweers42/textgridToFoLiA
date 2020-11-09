@@ -2,4 +2,5 @@
 examples
 .vscode
 textgridtofolia/__pycache__
-test/__pycache__
+tests/__pycache__
+tests/__pycache__/convert_text_grid_test.cpython-37.pyc

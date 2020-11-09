@@ -3,7 +3,7 @@ import unittest
 from folia.main import Utterance
 from praatio.tgio import openTextgrid
 
-from textgridtofolia.convert_text_grid import convert_text_grid_to_folia
+from textgridtofolia.convert_text_grid import add_text_grid_speakers_to_folia
 
 from praatio import tgio
 
@@ -123,8 +123,8 @@ class TestConvertTextGridMethods(unittest.TestCase):
         speakers = ["speaker_1", "speaker_2"]
         doc = folia.Document(id="test")
 
-
-        convert_text_grid_to_folia(self.filename, speakers, doc)
+        tg = tgio.openTextgrid(self.filename)
+        add_text_grid_speakers_to_folia(tg, speakers, doc)
 
         print(doc.xmlstring())
         print(assert_doc.xmlstring())
