@@ -63,6 +63,7 @@ def add_text_grid_speakers_to_folia(text_grid: tgio.Textgrid, speakers: List[str
     turns = find_turns(text_grid, speakers)
     speech_event = speech_doc.add(folia.Event)
     speech_event.cls = "dialog"
+    # print(turns)
     for turn in turns:
         turn_event = speech_event.add(folia.Event)
         turn_event.cls = "turn"
