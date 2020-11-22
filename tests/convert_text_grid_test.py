@@ -25,15 +25,15 @@ class TestConvertTextGridMethods(unittest.TestCase):
         tg = tgio.Textgrid()
 
         speaker_1_utterances = [
-            (0.0, 1.0, "This is utterance 1."),
-            (1.1, 2.1, "This is utterance 2."),
-            (4.0, 5.0, "This is utterance 3."),
+            (0.0, 1.0, "Dit is de eerste uitspraak."),
+            (1.1, 2.1, "Dit is de tweede uitspraak."),
+            (4.0, 5.0, "Dit is de vijfde uitspraak."),
         ]
 
         speaker_2_utterances = [
-            (2.2, 3.2, "This is utterance a."),
-            (3.3, 3.9, "This is utterance b."),
-            (5.1, 7.0, "This is utterance c."),
+            (2.2, 3.2, "Dit is de derde uitspraak."),
+            (3.3, 3.9, "Dit is de vierde uitspraak."),
+            (5.1, 7.0, "Dit is de zesde uitspraak."),
         ]
 
         speaker_1_tier = tgio.IntervalTier("speaker_1", speaker_1_utterances)
@@ -65,19 +65,23 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 0, 0)
         utterance.endtime = (0, 0, 1, 0)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "1.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "eerste")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
 
         utterance = assert_event.add(folia.Utterance)
         utterance.begintime = (0, 0, 1, 100)
         utterance.endtime = (0, 0, 2, 100)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "2.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "tweede")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
 
         assert_event = dialog_event.add(folia.Event)
         assert_event.cls = "turn"
@@ -87,19 +91,23 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 2, 200)
         utterance.endtime = (0, 0, 3, 200)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "a.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "derde")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
 
         utterance = assert_event.add(folia.Utterance)
         utterance.begintime = (0, 0, 3, 300)
         utterance.endtime = (0, 0, 3, 900)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "b.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "vierde")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
 
         assert_event = dialog_event.add(folia.Event)
         assert_event.cls = "turn"
@@ -109,10 +117,12 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 4, 0)
         utterance.endtime = (0, 0, 5, 0)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "3.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "vijfde")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
 
         assert_event = dialog_event.add(folia.Event)
         assert_event.cls = "turn"
@@ -122,10 +132,12 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 5, 100)
         utterance.endtime = (0, 0, 7, 0)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "c.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "zesde")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
 
         self.create_text_grid()
 
@@ -154,28 +166,34 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 0, 0)
         utterance.endtime = (0, 0, 1, 0)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "1.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "eerste")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
 
         utterance = assert_event.add(folia.Utterance)
         utterance.begintime = (0, 0, 1, 100)
         utterance.endtime = (0, 0, 2, 100)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "2.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "tweede")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
 
         utterance = assert_event.add(folia.Utterance)
         utterance.begintime = (0, 0, 4, 0)
         utterance.endtime = (0, 0, 5, 0)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "3.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "vijfde")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
 
         self.create_text_grid()
 
@@ -233,19 +251,24 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 0, 0)
         utterance.endtime = (0, 0, 1, 0)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "1.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "eerste")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
+
 
         utterance = assert_event.add(folia.Utterance)
         utterance.begintime = (0, 0, 1, 100)
         utterance.endtime = (0, 0, 2, 100)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "2.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "tweede")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
 
         assert_event = dialog_event.add(folia.Event)
         assert_event.cls = "turn"
@@ -255,19 +278,23 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 2, 200)
         utterance.endtime = (0, 0, 3, 200)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "a.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "derde")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
 
         utterance = assert_event.add(folia.Utterance)
         utterance.begintime = (0, 0, 3, 300)
         utterance.endtime = (0, 0, 3, 900)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "b.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "vierde")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
 
         assert_event = dialog_event.add(folia.Event)
         assert_event.cls = "turn"
@@ -277,10 +304,12 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 4, 0)
         utterance.endtime = (0, 0, 5, 0)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "3.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "vijfde")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
 
         assert_event = dialog_event.add(folia.Event)
         assert_event.cls = "turn"
@@ -290,10 +319,12 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 5, 100)
         utterance.endtime = (0, 0, 7, 0)
 
-        utterance.add(folia.Word, "This")
+        utterance.add(folia.Word, "Dit") 
         utterance.add(folia.Word, "is")
-        utterance.add(folia.Word, "utterance")
-        utterance.add(folia.Word, "c.")
+        utterance.add(folia.Word, "de")
+        utterance.add(folia.Word, "zesde")
+        utterance.add(folia.Word, "uitspraak")
+        utterance.add(folia.Word, ".")
 
         tg_event_event = assert_speech.add(folia.Event)
         tg_event_event.cls = "text-grid-events"
@@ -312,6 +343,5 @@ class TestConvertTextGridMethods(unittest.TestCase):
         event_tiers = ["EVENTS"]
 
         doc = convert_text_grid_to_folia(self.filename, speakers, event_tiers, "test")
-
         self.assertEqual(doc, assert_doc)
         self.assertEqual(doc.xmlstring(), assert_doc.xmlstring())

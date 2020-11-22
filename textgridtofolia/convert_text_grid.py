@@ -5,8 +5,11 @@ from .helpers import begin_end_time
 from folia import main as folia
 from praatio import tgio
 from typing import List, Tuple, Dict
+import frog
+
 TEST_FILE = "../examples/uni_fn000029.hmi"
 TEST_DOC = folia.Document(id="test")
+TOKENIZER = frog.Frog(frog.FrogOptions(lemma=False, morph=False, parser=False, xmlout=True))
 
 def convert_text_grids_to_folia(text_grid_files: List[str], speakers_dict: Dict[str, List[str]], event_tiers_dict: Dict[str, List[str]], name: str) -> folia.Document:
     doc = folia.Document(id=name)
@@ -41,9 +44,10 @@ def add_text_grid_invervals_to_folia(text_grid: tgio.Textgrid, inverval_tiers: L
             utterance.begintime = begin_end_time(interval.start)
             utterance.endtime = begin_end_time(interval.end)
             # TODO Replace split with Tokenizer!
-            for word in interval.label.split(" "):
+            tokens = TOKENIZER.process(interval.label)
+            for word in tokens.words():
                 if word != "":
-                    utterance.add(folia.Word, word)
+                    utterance.add(folia.Word, word.text())
                 else:
                     print(word)
 
@@ -74,9 +78,10 @@ def add_text_grid_speakers_to_folia(text_grid: tgio.Textgrid, speakers: List[str
             utterance.endtime = begin_end_time(ut.end)
 
             # TODO Replace split with Tokenizer!
-            for word in ut.label.split(" "):
+            tokens = TOKENIZER.process(ut.label)
+            for word in tokens.words():
                 if word != "":
-                    utterance.add(folia.Word, word)
+                    utterance.add(folia.Word, word.text())
                 else:
                     print(word)
 
