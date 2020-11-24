@@ -1,26 +1,45 @@
 from itertools import groupby
 from os import truncate
+from typing import Dict, List, Tuple
 
-from .helpers import begin_end_time
+import frog
 from folia import main as folia
 from praatio import tgio
-from typing import List, Tuple, Dict
-import frog
+
+from .helpers import begin_end_time
 
 TEST_FILE = "../examples/uni_fn000029.hmi"
 TEST_DOC = folia.Document(id="test")
-TOKENIZER = frog.Frog(frog.FrogOptions(lemma=False, morph=False, parser=False, xmlout=True))
+TOKENIZER = frog.Frog(
+    frog.FrogOptions(lemma=False, morph=False, parser=False, xmlout=True)
+)
 
-def convert_text_grids_to_folia(text_grid_files: List[str], speakers_dict: Dict[str, List[str]], event_tiers_dict: Dict[str, List[str]], name: str) -> folia.Document:
+
+def convert_text_grids_to_folia(
+    text_grid_files: List[str],
+    speakers_dict: Dict[str, List[str]],
+    event_tiers_dict: Dict[str, List[str]],
+    name: str,
+) -> folia.Document:
     doc = folia.Document(id=name)
     speech_doc = doc.add(folia.Speech)
-    for text_grid_file in text_grid_files:
+    for i, text_grid_file in enumerate(text_grid_files):
+        print(f"progress: {i}/{len(text_grid_files)}")
         speakers = speakers_dict.get(text_grid_file, [])
         event_tiers = event_tiers_dict.get(text_grid_file, [])
-        convert_text_grid_to_folia(text_grid_file, speakers, event_tiers, name, speech_doc=speech_doc)
+        convert_text_grid_to_folia(
+            text_grid_file, speakers, event_tiers, name, speech_doc=speech_doc
+        )
     return doc
 
-def convert_text_grid_to_folia(text_grid_file: str, speakers: List[str], events_tiers: List[str], name: str, speech_doc: folia.Speech = None) -> folia.Document:
+
+def convert_text_grid_to_folia(
+    text_grid_file: str,
+    speakers: List[str],
+    events_tiers: List[str],
+    name: str,
+    speech_doc: folia.Speech = None,
+) -> folia.Document:
     doc = None
     text_grid = tgio.openTextgrid(text_grid_file)
     if not speech_doc:
@@ -31,7 +50,10 @@ def convert_text_grid_to_folia(text_grid_file: str, speakers: List[str], events_
 
     return doc
 
-def add_text_grid_invervals_to_folia(text_grid: tgio.Textgrid, inverval_tiers: List[str], doc: folia.Document):
+
+def add_text_grid_invervals_to_folia(
+    text_grid: tgio.Textgrid, inverval_tiers: List[str], doc: folia.Document
+):
     speech = doc.add(folia.Speech)
     speech.cls = "intervals"
 
@@ -51,7 +73,10 @@ def add_text_grid_invervals_to_folia(text_grid: tgio.Textgrid, inverval_tiers: L
                 else:
                     print(word)
 
-def add_text_grid_speakers_to_folia(text_grid: tgio.Textgrid, speakers: List[str], speech_doc: folia.Speech):
+
+def add_text_grid_speakers_to_folia(
+    text_grid: tgio.Textgrid, speakers: List[str], speech_doc: folia.Speech
+):
     """A function to convert a TextGrid file and add it to a FoLia Document as a conversation between
        speakers.
 
@@ -86,8 +111,9 @@ def add_text_grid_speakers_to_folia(text_grid: tgio.Textgrid, speakers: List[str
                     print(word)
 
 
-
-def add_text_grid_events_to_folia(text_grid: tgio.Textgrid, event_tiers: List[str], speech_doc: folia.Speech) -> None:
+def add_text_grid_events_to_folia(
+    text_grid: tgio.Textgrid, event_tiers: List[str], speech_doc: folia.Speech
+) -> None:
     if not event_tiers:
         return
     text_grid_event_event = speech_doc.add(folia.Event)
@@ -99,9 +125,9 @@ def add_text_grid_events_to_folia(text_grid: tgio.Textgrid, event_tiers: List[st
             event.begintime = begin_end_time(tg_event[0])
 
 
-
-
-def find_turns(text_grid: tgio.Textgrid, speakers: List[str]) -> List[List[Tuple[tgio.Interval, str]]]:
+def find_turns(
+    text_grid: tgio.Textgrid, speakers: List[str]
+) -> List[List[Tuple[tgio.Interval, str]]]:
     """This function takes all the utterances in text_grid from speakers and orders
        them chronologically and groups them per speaker. To each utterance the speaker is also
        added in a tuple.

@@ -2,5 +2,6 @@
 examples
 .vscode
 textgridtofolia/__pycache__
+negation_annotation/__pycache__
 tests/__pycache__
 tests/__pycache__/convert_text_grid_test.cpython-37.pyc
