@@ -65,7 +65,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 0, 0)
         utterance.endtime = (0, 0, 1, 0)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "eerste")
@@ -76,7 +76,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 1, 100)
         utterance.endtime = (0, 0, 2, 100)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "tweede")
@@ -91,7 +91,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 2, 200)
         utterance.endtime = (0, 0, 3, 200)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "derde")
@@ -102,7 +102,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 3, 300)
         utterance.endtime = (0, 0, 3, 900)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "vierde")
@@ -117,7 +117,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 4, 0)
         utterance.endtime = (0, 0, 5, 0)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "vijfde")
@@ -132,7 +132,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 5, 100)
         utterance.endtime = (0, 0, 7, 0)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "zesde")
@@ -166,7 +166,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 0, 0)
         utterance.endtime = (0, 0, 1, 0)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "eerste")
@@ -177,7 +177,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 1, 100)
         utterance.endtime = (0, 0, 2, 100)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "tweede")
@@ -188,7 +188,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 4, 0)
         utterance.endtime = (0, 0, 5, 0)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "vijfde")
@@ -251,19 +251,18 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 0, 0)
         utterance.endtime = (0, 0, 1, 0)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "eerste")
         utterance.add(folia.Word, "uitspraak")
         utterance.add(folia.Word, ".")
 
-
         utterance = assert_event.add(folia.Utterance)
         utterance.begintime = (0, 0, 1, 100)
         utterance.endtime = (0, 0, 2, 100)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "tweede")
@@ -278,7 +277,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 2, 200)
         utterance.endtime = (0, 0, 3, 200)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "derde")
@@ -289,7 +288,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 3, 300)
         utterance.endtime = (0, 0, 3, 900)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "vierde")
@@ -304,7 +303,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 4, 0)
         utterance.endtime = (0, 0, 5, 0)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "vijfde")
@@ -319,7 +318,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.begintime = (0, 0, 5, 100)
         utterance.endtime = (0, 0, 7, 0)
 
-        utterance.add(folia.Word, "Dit") 
+        utterance.add(folia.Word, "Dit")
         utterance.add(folia.Word, "is")
         utterance.add(folia.Word, "de")
         utterance.add(folia.Word, "zesde")
