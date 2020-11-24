@@ -1,6 +1,7 @@
 from itertools import groupby
 from os import truncate
 from typing import Dict, List, Tuple
+import re
 
 import frog
 from folia import main as folia
@@ -66,7 +67,8 @@ def add_text_grid_invervals_to_folia(
             utterance.begintime = begin_end_time(interval.start)
             utterance.endtime = begin_end_time(interval.end)
             # TODO Replace split with Tokenizer!
-            tokens = TOKENIZER.process(interval.label)
+            str_utterance_no_asterisk = re.sub(r"\*\w", "", interval.label)
+            tokens = TOKENIZER.process(str_utterance_no_asterisk)
             for word in tokens.words():
                 if word != "":
                     utterance.add(folia.Word, word.text())
@@ -103,7 +105,8 @@ def add_text_grid_speakers_to_folia(
             utterance.endtime = begin_end_time(ut.end)
 
             # TODO Replace split with Tokenizer!
-            tokens = TOKENIZER.process(ut.label)
+            str_utterance_no_asterisk = re.sub(r"\*\w", "", ut.label)
+            tokens = TOKENIZER.process(str_utterance_no_asterisk)
             for word in tokens.words():
                 if word != "":
                     utterance.add(folia.Word, word.text())
