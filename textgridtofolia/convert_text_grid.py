@@ -66,15 +66,7 @@ def add_text_grid_invervals_to_folia(
             utterance = interval_event.add(folia.Utterance)
             utterance.begintime = begin_end_time(interval.start)
             utterance.endtime = begin_end_time(interval.end)
-            # TODO Replace split with Tokenizer!
-            str_utterance_no_asterisk = re.sub(r"\*\w", "", interval.label)
-            tokens = TOKENIZER.process(str_utterance_no_asterisk)
-            for word in tokens.words():
-                if word != "":
-                    utterance.add(folia.Word, word.text())
-                else:
-                    print(word)
-
+            add_tokens_to_utterance(utterance, interval.label)
 
 def add_text_grid_speakers_to_folia(
     text_grid: tgio.Textgrid, speakers: List[str], speech_doc: folia.Speech
@@ -103,15 +95,7 @@ def add_text_grid_speakers_to_folia(
             utterance = turn_event.add(folia.Utterance)
             utterance.begintime = begin_end_time(ut.start)
             utterance.endtime = begin_end_time(ut.end)
-
-            # TODO Replace split with Tokenizer!
-            str_utterance_no_asterisk = re.sub(r"\*\w", "", ut.label)
-            tokens = TOKENIZER.process(str_utterance_no_asterisk)
-            for word in tokens.words():
-                if word != "":
-                    utterance.add(folia.Word, word.text())
-                else:
-                    print(word)
+            add_tokens_to_utterance(utterance, ut.label)
 
 
 def add_text_grid_events_to_folia(
@@ -156,3 +140,13 @@ def find_turns(
         [(utterance, speaker) for (utterance, speaker) in g]
         for k, g in (groupby(ordered_utterances, lambda x: x[1]))
     ]
+
+
+def add_tokens_to_utterance(utterance: folia.Utterance, str_utterance: str) -> None:
+    str_utterance_no_asterisk = re.sub(r"\*\w", "", str_utterance)
+    tokens = TOKENIZER.process(str_utterance_no_asterisk)
+    for word in tokens.words():
+        if word != "":
+            utterance.add(folia.Word, word.text())
+        else:
+            print(word)
