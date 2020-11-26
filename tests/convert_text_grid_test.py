@@ -11,6 +11,7 @@ from textgridtofolia.convert_text_grid import (
     add_text_grid_events_to_folia,
     add_text_grid_speakers_to_folia,
     convert_text_grid_to_folia,
+    add_tokens_to_utterance
 )
 
 
@@ -344,3 +345,42 @@ class TestConvertTextGridMethods(unittest.TestCase):
         doc = convert_text_grid_to_folia(self.filename, speakers, event_tiers, "test")
         self.assertEqual(doc, assert_doc)
         self.assertEqual(doc.xmlstring(), assert_doc.xmlstring())
+
+
+    def test_add_tokens_to_utterance(self):
+        doc = folia.Document(id="test_utterance")
+        speech = doc.add(folia.Speech)
+
+        utt_folia = speech.add(folia.Utterance)
+        test_utt_str_1 = "Dit is een test*s"
+
+        assert_doc = folia.Document(id="test_utterance")
+        assert_speech = assert_doc.add(folia.Speech)
+        assert_ut_folia = assert_speech.add(folia.Utterance)
+        assert_ut_folia.add(folia.Word, "Dit")
+        assert_ut_folia.add(folia.Word, "is")
+        assert_ut_folia.add(folia.Word, "een")
+        w = assert_ut_folia.add(folia.Word, "test")
+        w.cls = "*s"
+
+        add_tokens_to_utterance(utt_folia, test_utt_str_1)
+        self.assertEqual(utt_folia.xmlstring(), assert_ut_folia.xmlstring())
+
+        test_utt_str_2 = "Dit i*a een test"
+
+        doc = folia.Document(id="test_utterance")
+        speech = doc.add(folia.Speech)
+
+        utt_folia = speech.add(folia.Utterance)
+
+        assert_doc = folia.Document(id="test_utterance")
+        assert_speech = assert_doc.add(folia.Speech)
+        assert_ut_folia = assert_speech.add(folia.Utterance)
+        assert_ut_folia.add(folia.Word, "Dit")
+        w = assert_ut_folia.add(folia.Word, "i")
+        assert_ut_folia.add(folia.Word, "een")
+        assert_ut_folia.add(folia.Word, "test")
+        w.cls = "*a"
+
+        add_tokens_to_utterance(utt_folia, test_utt_str_2)
+        self.assertEqual(utt_folia.xmlstring(), assert_ut_folia.xmlstring())

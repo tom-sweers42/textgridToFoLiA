@@ -143,10 +143,13 @@ def find_turns(
 
 
 def add_tokens_to_utterance(utterance: folia.Utterance, str_utterance: str) -> None:
-    str_utterance_no_asterisk = re.sub(r"\*\w", "", str_utterance)
-    tokens = TOKENIZER.process(str_utterance_no_asterisk)
-    for word in tokens.words():
-        if word != "":
-            utterance.add(folia.Word, word.text())
+    # str_utterance_no_asterisk = re.sub(r"\*\w", "", str_utterance)
+    tokens = TOKENIZER.process(str_utterance)
+    words = [word.text() for word in tokens.words()]
+    for i, word in enumerate(words):
+        if word == "*" or (words[i-1] == "*" and len(words[i-1]) == 1):
+            pass 
         else:
-            print(word)
+            folia_word = utterance.add(folia.Word, word)
+        if i+2 < len(words) and words[i+1] == "*" and len(words[i+2])==1:
+            folia_word.cls = f"*{words[i+2]}"
