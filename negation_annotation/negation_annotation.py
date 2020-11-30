@@ -26,7 +26,7 @@ def automatic_negation_cue_annotation(doc: folia.Document, reg_ex: str = NEG_REG
     words = query(doc)
 
     for word in words:
-        utterance = word.parent
+        utterance = word.parent.parent.parent
         modal_layer = list(utterance.select(folia.ModalitiesLayer))
         if not modal_layer:
             modal_layer = utterance.add(folia.ModalitiesLayer)
@@ -45,7 +45,7 @@ def automatic_affixal_negation_cue_annotation(
     words = query(doc)
 
     for word in words:
-        utterance = word.parent
+        utterance = word.parent.parent.parent
         modal_layer = list(utterance.select(folia.ModalitiesLayer))
         if not modal_layer:
             modal_layer = utterance.add(folia.ModalitiesLayer)

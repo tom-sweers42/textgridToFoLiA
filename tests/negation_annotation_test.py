@@ -22,21 +22,24 @@ class TestConvertNegationAnnotationMethods(unittest.TestCase):
         speech = doc.add(folia.Speech)
         dialog = speech.add(folia.Event)
         dialog.cls = "dialog"
-        turn = dialog.add(folia.Event)
+        round = dialog.add(folia.Event)
+        round.cls = "round"
+        turn = round.add(folia.Event)
         turn.cls = "turn"
         utt = turn.add(folia.Utterance)
         utterance_str = "Dit is niet een voorbeeld van negatie ."
         for word in utterance_str.split(" "):
             utt.add(folia.Word, word)
 
-        turn = dialog.add(folia.Event)
+        turn = round.add(folia.Event)
         turn.cls = "turn"
         utt = turn.add(folia.Utterance)
         utterance_str = "Dit is een onaardig voorbeeld van negatie ."
         for word in utterance_str.split(" "):
             utt.add(folia.Word, word)
-
-        turn = dialog.add(folia.Event)
+        round = dialog.add(folia.Event)
+        round.cls = "round"
+        turn = round.add(folia.Event)
         turn.cls = "turn"
         utt = turn.add(folia.Utterance)
         utterance_str = "Dit is niet niet een voorbeeld van negatie ."
@@ -51,25 +54,22 @@ class TestConvertNegationAnnotationMethods(unittest.TestCase):
         speech = doc.add(folia.Speech)
         dialog = speech.add(folia.Event)
         dialog.cls = "dialog"
-        turn = dialog.add(folia.Event)
+        round = dialog.add(folia.Event)
+        round.cls = "round"
+        turn = round.add(folia.Event)
         turn.cls = "turn"
         utt = turn.add(folia.Utterance)
         utt.add(folia.Word, "Dit")
         utt.add(folia.Word, "is")
         neg = utt.add(folia.Word, "niet")
-        print(type(neg))
         utt.add(folia.Word, "een")
         utt.add(folia.Word, "voorbeeld")
         utt.add(folia.Word, "van")
         utt.add(folia.Word, "negatie")
         utt.add(folia.Word, ".")
 
-        modal_layer = utt.add(folia.ModalitiesLayer)
-        modality = modal_layer.add(folia.Modality)
-        modality.cls = "negation"
-        modality.add(folia.Cue, neg)
 
-        turn = dialog.add(folia.Event)
+        turn = round.add(folia.Event)
         turn.cls = "turn"
         utt = turn.add(folia.Utterance)
         utt.add(folia.Word, "Dit")
@@ -81,15 +81,21 @@ class TestConvertNegationAnnotationMethods(unittest.TestCase):
         utt.add(folia.Word, "negatie")
         utt.add(folia.Word, ".")
 
-        morphene_layer = affix.add(folia.MorphologyLayer)
-        neg = morphene_layer.add(folia.Morpheme, "on")
-        morphene_layer.add(folia.Morpheme, "aardig")
-        modal_layer = utt.add(folia.ModalitiesLayer)
+        modal_layer = round.add(folia.ModalitiesLayer)
         modality = modal_layer.add(folia.Modality)
         modality.cls = "negation"
         modality.add(folia.Cue, neg)
 
-        turn = dialog.add(folia.Event)
+        morphene_layer = affix.add(folia.MorphologyLayer)
+        neg = morphene_layer.add(folia.Morpheme, "on")
+        morphene_layer.add(folia.Morpheme, "aardig")
+        # modal_layer = round.add(folia.ModalitiesLayer)
+        modality = modal_layer.add(folia.Modality)
+        modality.cls = "negation"
+        modality.add(folia.Cue, neg)
+        round = dialog.add(folia.Event)
+        round.cls = "round"
+        turn = round.add(folia.Event)
         turn.cls = "turn"
         utt = turn.add(folia.Utterance)
         utt.add(folia.Word, "Dit")
@@ -102,7 +108,7 @@ class TestConvertNegationAnnotationMethods(unittest.TestCase):
         utt.add(folia.Word, "negatie")
         utt.add(folia.Word, ".")
 
-        modal_layer = utt.add(folia.ModalitiesLayer)
+        modal_layer = round.add(folia.ModalitiesLayer)
         modality = modal_layer.add(folia.Modality)
         modality.cls = "negation"
         modality.add(folia.Cue, neg_1)

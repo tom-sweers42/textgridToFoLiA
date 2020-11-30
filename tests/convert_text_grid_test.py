@@ -244,7 +244,10 @@ class TestConvertTextGridMethods(unittest.TestCase):
         dialog_event = assert_speech.add(folia.Event)
         dialog_event.cls = "dialog"
 
-        assert_event = dialog_event.add(folia.Event)
+        round_event = dialog_event.add(folia.Event)
+        round_event.cls = "round"
+
+        assert_event = round_event.add(folia.Event)
         assert_event.cls = "turn"
         assert_event.speaker = "speaker_1"
 
@@ -270,7 +273,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.add(folia.Word, "uitspraak")
         utterance.add(folia.Word, ".")
 
-        assert_event = dialog_event.add(folia.Event)
+        assert_event = round_event.add(folia.Event)
         assert_event.cls = "turn"
         assert_event.speaker = "speaker_2"
 
@@ -296,7 +299,10 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.add(folia.Word, "uitspraak")
         utterance.add(folia.Word, ".")
 
-        assert_event = dialog_event.add(folia.Event)
+        round_event = dialog_event.add(folia.Event)
+        round_event.cls = "round"
+
+        assert_event = round_event.add(folia.Event)
         assert_event.cls = "turn"
         assert_event.speaker = "speaker_1"
 
@@ -311,7 +317,7 @@ class TestConvertTextGridMethods(unittest.TestCase):
         utterance.add(folia.Word, "uitspraak")
         utterance.add(folia.Word, ".")
 
-        assert_event = dialog_event.add(folia.Event)
+        assert_event = round_event.add(folia.Event)
         assert_event.cls = "turn"
         assert_event.speaker = "speaker_2"
 

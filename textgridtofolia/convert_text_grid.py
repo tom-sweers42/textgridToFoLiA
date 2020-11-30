@@ -46,7 +46,8 @@ def convert_text_grid_to_folia(
     if not speech_doc:
         doc = folia.Document(id=name)
         speech_doc = doc.add(folia.Speech)
-    add_text_grid_speakers_to_folia(text_grid, speakers, speech_doc)
+    # add_text_grid_speakers_to_folia(text_grid, speakers, speech_doc)
+    add_text_grid_two_speakers_rounds_to_folia(text_grid, speakers, speech_doc)
     add_text_grid_events_to_folia(text_grid, events_tiers, speech_doc)
 
     return doc
@@ -96,6 +97,30 @@ def add_text_grid_speakers_to_folia(
             utterance.begintime = begin_end_time(ut.start)
             utterance.endtime = begin_end_time(ut.end)
             add_tokens_to_utterance(utterance, ut.label)
+
+
+def add_text_grid_two_speakers_rounds_to_folia(text_grid: tgio.Textgrid, speakers: List[str], speech_doc: folia.Speech):
+    turns = find_turns(text_grid, speakers)
+    speech_event = speech_doc.add(folia.Event)
+    speech_event.cls = "dialog"
+
+    round_event = speech_event.add(folia.Event)
+    round_event.cls = "round"
+
+    for j, turn in enumerate(turns):
+        if not(j % 2) and j > 0:
+            round_event = speech_event.add(folia.Event)
+            round_event.cls = "round"
+        turn_event = round_event.add(folia.Event)
+        turn_event.cls = "turn"
+        for i, (ut, speaker) in enumerate(turn):
+            if i == 0:
+                turn_event.speaker = speaker
+            utterance = turn_event.add(folia.Utterance)
+            utterance.begintime = begin_end_time(ut.start)
+            utterance.endtime = begin_end_time(ut.end)
+            add_tokens_to_utterance(utterance, ut.label)
+
 
 
 def add_text_grid_events_to_folia(
