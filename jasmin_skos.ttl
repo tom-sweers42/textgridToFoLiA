@@ -1,0 +1,54 @@
+@base <http://your/namespace/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix fsd: <http://folia.science.ru.nl/setdefinition#>
+
+<#jasmin-orthology>
+    a skos:Collection ;
+    skos:notation "jasmin-orthology" ;
+    skos:prefLabel "Orthographic codes from JASMIN" ;
+    skos:member <#*v> , <#*d> , <#*z> , <#*n> , <#*a> , <#*u>, <#*f> , <#*s> , <#*x>;
+
+<#*v>
+    a skos:Concept ;
+    skos:notation   "*v" ;
+    skos:prefLabel  "Foreign words" ;
+
+<#*d>
+    a skos:Concept ;
+    skos:notation   "*d" ;
+    skos:prefLabel  "Dialect words" ;
+
+<#*z>
+    a skos:Concept ;
+    skos:notation   "*z" ;
+    skos:prefLabel  "Dialect pronunciation" ;
+
+<#*n>
+    a skos:Concept ;
+    skos:notation   "*n" ;
+    skos:prefLabel  "New words" ;
+
+<#*a>
+    a skos:Concept ;
+    skos:notation   "*z" ;
+    skos:prefLabel  "Aborted words" ;
+
+<#*u>
+    a skos:Concept ;
+    skos:notation   "*u" ;
+    skos:prefLabel  "Onomatopeia" ;
+
+<#*f>
+    a skos:Concept ;
+    skos:notation   "*z" ;
+    skos:prefLabel  "Non-native pronunciation" ;
+
+<#*s>
+    a skos:Concept ;
+    skos:notation   "*s" ;
+    skos:prefLabel  "Long pause" ;
+
+<#*x>
+    a skos:Concept ;
+    skos:notation   "*x" ;
+    skos:prefLabel  "Uncertain transcription" ;
