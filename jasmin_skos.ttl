@@ -1,4 +1,4 @@
-@base <http://your/namespace/> .
+@base <https://raw.githubusercontent.com/tom-sweers42/textgridToFoLiA/main/> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix fsd: <http://folia.science.ru.nl/setdefinition#> .
 
@@ -6,12 +6,12 @@
     a skos:Collection ;
     skos:notation "jasmin-orthology" ;
     skos:prefLabel "Orthographic codes from JASMIN" ;
-    skos:member <#*v> , <#*d> , <#*z> , <#*n> , <#*a> , <#*u> , <#*f> , <#*s> , <#*x> ;
+    skos:member <#*v> , <#*d> , <#*z> , <#*n> , <#*a> , <#*u> , <#*f> , <#*s> , <#*x> .
 
 <*#v>
     a skos:Concept ;
     skos:notation   "*v" ;
-    skos:prefLabel  "Foreign Words" .
+    skos:prefLabel "Foreign Words" .
 
 <#*d>
     a skos:Concept ;
@@ -30,7 +30,7 @@
 
 <#*a>
     a skos:Concept ;
-    skos:notation   "*z" ;
+    skos:notation   "*a" ;
     skos:prefLabel  "Aborted words" .
 
 <#*u>
@@ -40,7 +40,7 @@
 
 <#*f>
     a skos:Concept ;
-    skos:notation   "*z" ;
+    skos:notation   "*f" ;
     skos:prefLabel  "Non-native pronunciation" .
 
 <#*s>
