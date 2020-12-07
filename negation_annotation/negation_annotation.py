@@ -4,24 +4,24 @@ import folia.main as folia
 from folia import fql
 from pynlpl.formats import cql
 
-NEG_REG_EX = r"niet|nee|geen|nooit"
+import json
 
-AFFIX_NEG_DICT = {
-    "onaardig": 2,
-    "onverwachte": 2,
-    "onverschillig": 2,
-    "onvoorziene": 2,
-    "onmisbaar": 2,
-    "indirect": 2,
-    "zoutloos": -4,
-    "trouweloos": -4,
-    "suikerloos": -4,
-    "glutenvrij": -4,
-    "suikervrij": -4,
-}
+NEG_EX_FILE = "./negation_annotation/negation_cues"
+
+AFFIX_NEG_FILE = "./negation_annotation/affixal_negation_cues.json"
+
+def open_negation_cues(filename=NEG_EX_FILE):
+    with open(filename) as negation_cue_file:
+        b = '\b'
+        return rf"{'|'.join(['^'+cue[:-1]+'$' for cue in negation_cue_file.readlines()])}"
+
+def open_affixal_negation_cues(filename=AFFIX_NEG_FILE):
+    with open(filename) as f:
+        return json.loads(f.read())
 
 
-def automatic_negation_cue_annotation(doc: folia.Document, reg_ex: str = NEG_REG_EX):
+def automatic_negation_cue_annotation(doc: folia.Document, cue_file: str = NEG_EX_FILE):
+    reg_ex = open_negation_cues(cue_file)
     query = fql.Query(f"SELECT w WHERE text MATCHES {reg_ex}")
     words = query(doc)
 
@@ -38,8 +38,8 @@ def automatic_negation_cue_annotation(doc: folia.Document, reg_ex: str = NEG_REG
 
 
 def automatic_affixal_negation_cue_annotation(
-    doc: folia.Document, affix_neg_dict: Dict[str, int] = AFFIX_NEG_DICT
-):
+    doc: folia.Document, affix_neg_file: str = AFFIX_NEG_FILE):
+    affix_neg_dict = open_affixal_negation_cues(affix_neg_file)
     reg_ex = rf"{'|'.join(affix_neg_dict.keys())}"
     query = fql.Query(f"SELECT w WHERE text MATCHES {reg_ex}")
     words = query(doc)
