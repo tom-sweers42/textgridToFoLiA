@@ -1,0 +1,14 @@
+@base <https://raw.githubusercontent.com/tom-sweers42/textgridToFoLiA/main/> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix fsd: <http://folia.science.ru.nl/setdefinition#> .
+
+<#negation-annotation>
+    a skos:Collection ;
+    skos:notation "negation-annotation" ;
+    skos:prefLabel "Negation annotation" ;
+    skos:member <#negation> .
+
+<#negation>
+    a skos:Concept ;
+    skos:notation   "negation" ;
+    skos:prefLabel "Negation" .
